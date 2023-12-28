@@ -27,6 +27,19 @@ resource "docker_container" "example-app" {
   }
 }
 
-# resource "docker_container" "db" {
-#   Uzupelnij  
-# }
+resource "docker_container" "db" {
+  name  = "example-db"
+  image = docker_image.postgres.image_id
+  networks_advanced {
+    name = docker_network.shared.name
+  }
+  env = [
+    "POSTGRES_DB=app",
+    "POSTGRES_USER=app_user",
+    "POSTGRES_PASSWORD=app_pass"
+  ]
+  ports {
+    internal = 5432
+    external = 5432
+  }
+}

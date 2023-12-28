@@ -1,0 +1,670 @@
+ciecia@alpha:~/Desktop/wsb/iac-labs-infra/terraform/zad3$ terraform apply
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  # docker_container.db will be created
+  + resource "docker_container" "db" {
+      + attach                                      = false
+      + bridge                                      = (known after apply)
+      + command                                     = (known after apply)
+      + container_logs                              = (known after apply)
+      + container_read_refresh_timeout_milliseconds = 15000
+      + entrypoint                                  = (known after apply)
+      + env                                         = [
+          + "POSTGRES_DB=app",
+          + "POSTGRES_PASSWORD=app_pass",
+          + "POSTGRES_USER=app_user",
+        ]
+      + exit_code                                   = (known after apply)
+      + hostname                                    = (known after apply)
+      + id                                          = (known after apply)
+      + image                                       = (known after apply)
+      + init                                        = (known after apply)
+      + ipc_mode                                    = (known after apply)
+      + log_driver                                  = (known after apply)
+      + logs                                        = false
+      + must_run                                    = true
+      + name                                        = "example-db"
+      + network_data                                = (known after apply)
+      + read_only                                   = false
+      + remove_volumes                              = true
+      + restart                                     = "no"
+      + rm                                          = false
+      + runtime                                     = (known after apply)
+      + security_opts                               = (known after apply)
+      + shm_size                                    = (known after apply)
+      + start                                       = true
+      + stdin_open                                  = false
+      + stop_signal                                 = (known after apply)
+      + stop_timeout                                = (known after apply)
+      + tty                                         = false
+      + wait                                        = false
+      + wait_timeout                                = 60
+
+      + networks_advanced {
+          + aliases = []
+          + name    = "tfnet"
+        }
+
+      + ports {
+          + external = 5432
+          + internal = 5432
+          + ip       = "0.0.0.0"
+          + protocol = "tcp"
+        }
+    }
+
+  # docker_container.example-app will be created
+  + resource "docker_container" "example-app" {
+      + attach                                      = false
+      + bridge                                      = (known after apply)
+      + command                                     = (known after apply)
+      + container_logs                              = (known after apply)
+      + container_read_refresh_timeout_milliseconds = 15000
+      + entrypoint                                  = (known after apply)
+      + env                                         = [
+          + "DB_ENGINE=postgresql",
+          + "DB_HOST=db",
+          + "DB_NAME=app",
+          + "DB_PASS=app_pass",
+          + "DB_PORT=5432",
+          + "DB_USERNAME=app_user",
+        ]
+      + exit_code                                   = (known after apply)
+      + hostname                                    = (known after apply)
+      + id                                          = (known after apply)
+      + image                                       = (known after apply)
+      + init                                        = (known after apply)
+      + ipc_mode                                    = (known after apply)
+      + log_driver                                  = (known after apply)
+      + logs                                        = false
+      + must_run                                    = true
+      + name                                        = "example-app"
+      + network_data                                = (known after apply)
+      + read_only                                   = false
+      + remove_volumes                              = true
+      + restart                                     = "no"
+      + rm                                          = false
+      + runtime                                     = (known after apply)
+      + security_opts                               = (known after apply)
+      + shm_size                                    = (known after apply)
+      + start                                       = true
+      + stdin_open                                  = false
+      + stop_signal                                 = (known after apply)
+      + stop_timeout                                = (known after apply)
+      + tty                                         = false
+      + wait                                        = false
+      + wait_timeout                                = 60
+
+      + networks_advanced {
+          + aliases = []
+          + name    = "tfnet"
+        }
+
+      + ports {
+          + external = 8000
+          + internal = 8000
+          + ip       = "0.0.0.0"
+          + protocol = "tcp"
+        }
+    }
+
+  # docker_image.example_app will be created
+  + resource "docker_image" "example_app" {
+      + id          = (known after apply)
+      + image_id    = (known after apply)
+      + name        = "example_app"
+      + repo_digest = (known after apply)
+
+      + build {
+          + build_arg    = {
+              + "platform" = "linux/amd64"
+            }
+          + cache_from   = []
+          + context      = "/home/ciecia/Desktop/wsb/iac-labs-infra/terraform/zad3/../../iac-labs/example-app"
+          + dockerfile   = "Dockerfile"
+          + extra_hosts  = []
+          + label        = {
+              + "author" = "student"
+            }
+          + remove       = true
+          + security_opt = []
+          + tag          = [
+              + "example_app:latest",
+            ]
+        }
+    }
+
+  # docker_image.postgres will be created
+  + resource "docker_image" "postgres" {
+      + id          = (known after apply)
+      + image_id    = (known after apply)
+      + name        = "postgres:latest"
+      + repo_digest = (known after apply)
+    }
+
+  # docker_network.shared will be created
+  + resource "docker_network" "shared" {
+      + attachable  = true
+      + driver      = (known after apply)
+      + id          = (known after apply)
+      + internal    = (known after apply)
+      + ipam_driver = "default"
+      + name        = "tfnet"
+      + options     = (known after apply)
+      + scope       = (known after apply)
+    }
+
+Plan: 5 to add, 0 to change, 0 to destroy.
+
+Changes to Outputs:
+  + address = "http://localhost:8000"
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+docker_image.postgres: Creating...
+docker_network.shared: Creating...
+docker_image.example_app: Creating...
+docker_network.shared: Creation complete after 2s [id=a9dc58033a14e04880b1bfca9ae50719f5220cf73f7f5cab70e6954eca89d407]
+docker_image.postgres: Still creating... [10s elapsed]
+docker_image.example_app: Still creating... [10s elapsed]
+docker_image.postgres: Still creating... [20s elapsed]
+docker_image.example_app: Still creating... [20s elapsed]
+docker_image.postgres: Creation complete after 25s [id=sha256:398d34d3cc5e29c86077dbf95ad9da223c3a2d0227d12012087da9d468da9d5bpostgres:latest]
+docker_container.db: Creating...
+docker_container.db: Creation complete after 1s [id=6e601f35c83e9bbf8f0919bd60429ae888d1021844926ba45ca41fbad7f79694]
+docker_image.example_app: Still creating... [30s elapsed]
+docker_image.example_app: Still creating... [40s elapsed]
+docker_image.example_app: Still creating... [50s elapsed]
+docker_image.example_app: Still creating... [1m0s elapsed]
+docker_image.example_app: Creation complete after 1m0s [id=sha256:4d3e1d800c23f3ee61d2fa47561cc8be679ca228f04cdb9c6a5408594d03338dexample_app]
+docker_container.example-app: Creating...
+docker_container.example-app: Creation complete after 1s [id=5285cca5427641d814293c20798ddcd89c788b1243f377e198604131b9a6f339]
+
+Apply complete! Resources: 5 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+address = "http://localhost:8000"
+ciecia@alpha:~/Desktop/wsb/iac-labs-infra/terraform/zad3$ terraform state list
+docker_container.db
+docker_container.example-app
+docker_image.example_app
+docker_image.postgres
+docker_network.shared
+ciecia@alpha:~/Desktop/wsb/iac-labs-infra/terraform/zad3$ terraform show
+# docker_container.db:
+resource "docker_container" "db" {
+    attach                                      = false
+    command                                     = [
+        "postgres",
+    ]
+    container_read_refresh_timeout_milliseconds = 15000
+    cpu_shares                                  = 0
+    entrypoint                                  = [
+        "docker-entrypoint.sh",
+    ]
+    env                                         = [
+        "POSTGRES_DB=app",
+        "POSTGRES_PASSWORD=app_pass",
+        "POSTGRES_USER=app_user",
+    ]
+    hostname                                    = "6e601f35c83e"
+    id                                          = "6e601f35c83e9bbf8f0919bd60429ae888d1021844926ba45ca41fbad7f79694"
+    image                                       = "sha256:398d34d3cc5e29c86077dbf95ad9da223c3a2d0227d12012087da9d468da9d5b"
+    init                                        = false
+    ipc_mode                                    = "private"
+    log_driver                                  = "json-file"
+    logs                                        = false
+    max_retry_count                             = 0
+    memory                                      = 0
+    memory_swap                                 = 0
+    must_run                                    = true
+    name                                        = "example-db"
+    network_data                                = [
+        {
+            gateway                   = "172.19.0.1"
+            global_ipv6_address       = ""
+            global_ipv6_prefix_length = 0
+            ip_address                = "172.19.0.2"
+            ip_prefix_length          = 16
+            ipv6_gateway              = ""
+            mac_address               = "02:42:ac:13:00:02"
+            network_name              = "tfnet"
+        },
+    ]
+    network_mode                                = "default"
+    privileged                                  = false
+    publish_all_ports                           = false
+    read_only                                   = false
+    remove_volumes                              = true
+    restart                                     = "no"
+    rm                                          = false
+    runtime                                     = "runc"
+    security_opts                               = []
+    shm_size                                    = 64
+    start                                       = true
+    stdin_open                                  = false
+    stop_signal                                 = "SIGINT"
+    stop_timeout                                = 0
+    tty                                         = false
+    wait                                        = false
+    wait_timeout                                = 60
+
+    networks_advanced {
+        aliases = []
+        name    = "tfnet"
+    }
+
+    ports {
+        external = 5432
+        internal = 5432
+        ip       = "0.0.0.0"
+        protocol = "tcp"
+    }
+}
+
+# docker_container.example-app:
+resource "docker_container" "example-app" {
+    attach                                      = false
+    command                                     = []
+    container_read_refresh_timeout_milliseconds = 15000
+    cpu_shares                                  = 0
+    entrypoint                                  = [
+        "poetry",
+        "run",
+        "task",
+        "prod",
+    ]
+    env                                         = [
+        "DB_ENGINE=postgresql",
+        "DB_HOST=db",
+        "DB_NAME=app",
+        "DB_PASS=app_pass",
+        "DB_PORT=5432",
+        "DB_USERNAME=app_user",
+    ]
+    hostname                                    = "5285cca54276"
+    id                                          = "5285cca5427641d814293c20798ddcd89c788b1243f377e198604131b9a6f339"
+    image                                       = "sha256:4d3e1d800c23f3ee61d2fa47561cc8be679ca228f04cdb9c6a5408594d03338d"
+    init                                        = false
+    ipc_mode                                    = "private"
+    log_driver                                  = "json-file"
+    logs                                        = false
+    max_retry_count                             = 0
+    memory                                      = 0
+    memory_swap                                 = 0
+    must_run                                    = true
+    name                                        = "example-app"
+    network_data                                = [
+        {
+            gateway                   = "172.19.0.1"
+            global_ipv6_address       = ""
+            global_ipv6_prefix_length = 0
+            ip_address                = "172.19.0.3"
+            ip_prefix_length          = 16
+            ipv6_gateway              = ""
+            mac_address               = "02:42:ac:13:00:03"
+            network_name              = "tfnet"
+        },
+    ]
+    network_mode                                = "default"
+    privileged                                  = false
+    publish_all_ports                           = false
+    read_only                                   = false
+    remove_volumes                              = true
+    restart                                     = "no"
+    rm                                          = false
+    runtime                                     = "runc"
+    security_opts                               = []
+    shm_size                                    = 64
+    start                                       = true
+    stdin_open                                  = false
+    stop_timeout                                = 0
+    tty                                         = false
+    wait                                        = false
+    wait_timeout                                = 60
+    working_dir                                 = "/app"
+
+    networks_advanced {
+        aliases = []
+        name    = "tfnet"
+    }
+
+    ports {
+        external = 8000
+        internal = 8000
+        ip       = "0.0.0.0"
+        protocol = "tcp"
+    }
+}
+
+# docker_image.example_app:
+resource "docker_image" "example_app" {
+    id       = "sha256:4d3e1d800c23f3ee61d2fa47561cc8be679ca228f04cdb9c6a5408594d03338dexample_app"
+    image_id = "sha256:4d3e1d800c23f3ee61d2fa47561cc8be679ca228f04cdb9c6a5408594d03338d"
+    name     = "example_app"
+
+    build {
+        build_arg    = {
+            "platform" = "linux/amd64"
+        }
+        cache_from   = []
+        context      = "/home/ciecia/Desktop/wsb/iac-labs-infra/terraform/zad3/../../iac-labs/example-app"
+        dockerfile   = "Dockerfile"
+        extra_hosts  = []
+        label        = {
+            "author" = "student"
+        }
+        remove       = true
+        security_opt = []
+        tag          = [
+            "example_app:latest",
+        ]
+    }
+}
+
+# docker_image.postgres:
+resource "docker_image" "postgres" {
+    id          = "sha256:398d34d3cc5e29c86077dbf95ad9da223c3a2d0227d12012087da9d468da9d5bpostgres:latest"
+    image_id    = "sha256:398d34d3cc5e29c86077dbf95ad9da223c3a2d0227d12012087da9d468da9d5b"
+    name        = "postgres:latest"
+    repo_digest = "postgres@sha256:e2135391c55eb2ecabaaaeef4a9538bb8915c1980953fb6ce41a2d6d3e4b5695"
+}
+
+# docker_network.shared:
+resource "docker_network" "shared" {
+    attachable  = true
+    driver      = "bridge"
+    id          = "a9dc58033a14e04880b1bfca9ae50719f5220cf73f7f5cab70e6954eca89d407"
+    ingress     = false
+    internal    = false
+    ipam_driver = "default"
+    ipv6        = false
+    name        = "tfnet"
+    options     = {}
+    scope       = "local"
+
+    ipam_config {
+        aux_address = {}
+        gateway     = "172.19.0.1"
+        subnet      = "172.19.0.0/16"
+    }
+}
+
+
+Outputs:
+
+address = "http://localhost:8000"
+ciecia@alpha:~/Desktop/wsb/iac-labs-infra/terraform/zad3$ terraform destroy
+docker_image.postgres: Refreshing state... [id=sha256:398d34d3cc5e29c86077dbf95ad9da223c3a2d0227d12012087da9d468da9d5bpostgres:latest]
+docker_network.shared: Refreshing state... [id=a9dc58033a14e04880b1bfca9ae50719f5220cf73f7f5cab70e6954eca89d407]
+docker_image.example_app: Refreshing state... [id=sha256:4d3e1d800c23f3ee61d2fa47561cc8be679ca228f04cdb9c6a5408594d03338dexample_app]
+docker_container.db: Refreshing state... [id=6e601f35c83e9bbf8f0919bd60429ae888d1021844926ba45ca41fbad7f79694]
+docker_container.example-app: Refreshing state... [id=5285cca5427641d814293c20798ddcd89c788b1243f377e198604131b9a6f339]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # docker_container.db will be destroyed
+  - resource "docker_container" "db" {
+      - attach                                      = false -> null
+      - command                                     = [
+          - "postgres",
+        ] -> null
+      - container_read_refresh_timeout_milliseconds = 15000 -> null
+      - cpu_shares                                  = 0 -> null
+      - dns                                         = [] -> null
+      - dns_opts                                    = [] -> null
+      - dns_search                                  = [] -> null
+      - entrypoint                                  = [
+          - "docker-entrypoint.sh",
+        ] -> null
+      - env                                         = [
+          - "POSTGRES_DB=app",
+          - "POSTGRES_PASSWORD=app_pass",
+          - "POSTGRES_USER=app_user",
+        ] -> null
+      - group_add                                   = [] -> null
+      - hostname                                    = "6e601f35c83e" -> null
+      - id                                          = "6e601f35c83e9bbf8f0919bd60429ae888d1021844926ba45ca41fbad7f79694" -> null
+      - image                                       = "sha256:398d34d3cc5e29c86077dbf95ad9da223c3a2d0227d12012087da9d468da9d5b" -> null
+      - init                                        = false -> null
+      - ipc_mode                                    = "private" -> null
+      - log_driver                                  = "json-file" -> null
+      - log_opts                                    = {} -> null
+      - logs                                        = false -> null
+      - max_retry_count                             = 0 -> null
+      - memory                                      = 0 -> null
+      - memory_swap                                 = 0 -> null
+      - must_run                                    = true -> null
+      - name                                        = "example-db" -> null
+      - network_data                                = [
+          - {
+              - gateway                   = "172.19.0.1"
+              - global_ipv6_address       = ""
+              - global_ipv6_prefix_length = 0
+              - ip_address                = "172.19.0.2"
+              - ip_prefix_length          = 16
+              - ipv6_gateway              = ""
+              - mac_address               = "02:42:ac:13:00:02"
+              - network_name              = "tfnet"
+            },
+        ] -> null
+      - network_mode                                = "default" -> null
+      - privileged                                  = false -> null
+      - publish_all_ports                           = false -> null
+      - read_only                                   = false -> null
+      - remove_volumes                              = true -> null
+      - restart                                     = "no" -> null
+      - rm                                          = false -> null
+      - runtime                                     = "runc" -> null
+      - security_opts                               = [] -> null
+      - shm_size                                    = 64 -> null
+      - start                                       = true -> null
+      - stdin_open                                  = false -> null
+      - stop_signal                                 = "SIGINT" -> null
+      - stop_timeout                                = 0 -> null
+      - storage_opts                                = {} -> null
+      - sysctls                                     = {} -> null
+      - tmpfs                                       = {} -> null
+      - tty                                         = false -> null
+      - wait                                        = false -> null
+      - wait_timeout                                = 60 -> null
+
+      - networks_advanced {
+          - aliases = [] -> null
+          - name    = "tfnet" -> null
+        }
+
+      - ports {
+          - external = 5432 -> null
+          - internal = 5432 -> null
+          - ip       = "0.0.0.0" -> null
+          - protocol = "tcp" -> null
+        }
+    }
+
+  # docker_container.example-app will be destroyed
+  - resource "docker_container" "example-app" {
+      - attach                                      = false -> null
+      - command                                     = [] -> null
+      - container_read_refresh_timeout_milliseconds = 15000 -> null
+      - cpu_shares                                  = 0 -> null
+      - dns                                         = [] -> null
+      - dns_opts                                    = [] -> null
+      - dns_search                                  = [] -> null
+      - entrypoint                                  = [
+          - "poetry",
+          - "run",
+          - "task",
+          - "prod",
+        ] -> null
+      - env                                         = [
+          - "DB_ENGINE=postgresql",
+          - "DB_HOST=db",
+          - "DB_NAME=app",
+          - "DB_PASS=app_pass",
+          - "DB_PORT=5432",
+          - "DB_USERNAME=app_user",
+        ] -> null
+      - group_add                                   = [] -> null
+      - hostname                                    = "5285cca54276" -> null
+      - id                                          = "5285cca5427641d814293c20798ddcd89c788b1243f377e198604131b9a6f339" -> null
+      - image                                       = "sha256:4d3e1d800c23f3ee61d2fa47561cc8be679ca228f04cdb9c6a5408594d03338d" -> null
+      - init                                        = false -> null
+      - ipc_mode                                    = "private" -> null
+      - log_driver                                  = "json-file" -> null
+      - log_opts                                    = {} -> null
+      - logs                                        = false -> null
+      - max_retry_count                             = 0 -> null
+      - memory                                      = 0 -> null
+      - memory_swap                                 = 0 -> null
+      - must_run                                    = true -> null
+      - name                                        = "example-app" -> null
+      - network_data                                = [
+          - {
+              - gateway                   = "172.19.0.1"
+              - global_ipv6_address       = ""
+              - global_ipv6_prefix_length = 0
+              - ip_address                = "172.19.0.3"
+              - ip_prefix_length          = 16
+              - ipv6_gateway              = ""
+              - mac_address               = "02:42:ac:13:00:03"
+              - network_name              = "tfnet"
+            },
+        ] -> null
+      - network_mode                                = "default" -> null
+      - privileged                                  = false -> null
+      - publish_all_ports                           = false -> null
+      - read_only                                   = false -> null
+      - remove_volumes                              = true -> null
+      - restart                                     = "no" -> null
+      - rm                                          = false -> null
+      - runtime                                     = "runc" -> null
+      - security_opts                               = [] -> null
+      - shm_size                                    = 64 -> null
+      - start                                       = true -> null
+      - stdin_open                                  = false -> null
+      - stop_timeout                                = 0 -> null
+      - storage_opts                                = {} -> null
+      - sysctls                                     = {} -> null
+      - tmpfs                                       = {} -> null
+      - tty                                         = false -> null
+      - wait                                        = false -> null
+      - wait_timeout                                = 60 -> null
+      - working_dir                                 = "/app" -> null
+
+      - networks_advanced {
+          - aliases = [] -> null
+          - name    = "tfnet" -> null
+        }
+
+      - ports {
+          - external = 8000 -> null
+          - internal = 8000 -> null
+          - ip       = "0.0.0.0" -> null
+          - protocol = "tcp" -> null
+        }
+    }
+
+  # docker_image.example_app will be destroyed
+  - resource "docker_image" "example_app" {
+      - id       = "sha256:4d3e1d800c23f3ee61d2fa47561cc8be679ca228f04cdb9c6a5408594d03338dexample_app" -> null
+      - image_id = "sha256:4d3e1d800c23f3ee61d2fa47561cc8be679ca228f04cdb9c6a5408594d03338d" -> null
+      - name     = "example_app" -> null
+
+      - build {
+          - build_arg       = {
+              - "platform" = "linux/amd64"
+            } -> null
+          - build_args      = {} -> null
+          - cache_from      = [] -> null
+          - context         = "/home/ciecia/Desktop/wsb/iac-labs-infra/terraform/zad3/../../iac-labs/example-app" -> null
+          - cpu_period      = 0 -> null
+          - cpu_quota       = 0 -> null
+          - cpu_shares      = 0 -> null
+          - dockerfile      = "Dockerfile" -> null
+          - extra_hosts     = [] -> null
+          - force_remove    = false -> null
+          - label           = {
+              - "author" = "student"
+            } -> null
+          - labels          = {} -> null
+          - memory          = 0 -> null
+          - memory_swap     = 0 -> null
+          - no_cache        = false -> null
+          - pull_parent     = false -> null
+          - remove          = true -> null
+          - security_opt    = [] -> null
+          - shm_size        = 0 -> null
+          - squash          = false -> null
+          - suppress_output = false -> null
+          - tag             = [
+              - "example_app:latest",
+            ] -> null
+        }
+    }
+
+  # docker_image.postgres will be destroyed
+  - resource "docker_image" "postgres" {
+      - id          = "sha256:398d34d3cc5e29c86077dbf95ad9da223c3a2d0227d12012087da9d468da9d5bpostgres:latest" -> null
+      - image_id    = "sha256:398d34d3cc5e29c86077dbf95ad9da223c3a2d0227d12012087da9d468da9d5b" -> null
+      - name        = "postgres:latest" -> null
+      - repo_digest = "postgres@sha256:e2135391c55eb2ecabaaaeef4a9538bb8915c1980953fb6ce41a2d6d3e4b5695" -> null
+    }
+
+  # docker_network.shared will be destroyed
+  - resource "docker_network" "shared" {
+      - attachable   = true -> null
+      - driver       = "bridge" -> null
+      - id           = "a9dc58033a14e04880b1bfca9ae50719f5220cf73f7f5cab70e6954eca89d407" -> null
+      - ingress      = false -> null
+      - internal     = false -> null
+      - ipam_driver  = "default" -> null
+      - ipam_options = {} -> null
+      - ipv6         = false -> null
+      - name         = "tfnet" -> null
+      - options      = {} -> null
+      - scope        = "local" -> null
+
+      - ipam_config {
+          - aux_address = {} -> null
+          - gateway     = "172.19.0.1" -> null
+          - subnet      = "172.19.0.0/16" -> null
+        }
+    }
+
+Plan: 0 to add, 0 to change, 5 to destroy.
+
+Changes to Outputs:
+  - address = "http://localhost:8000" -> null
+
+Do you really want to destroy all resources?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+docker_container.example-app: Destroying... [id=5285cca5427641d814293c20798ddcd89c788b1243f377e198604131b9a6f339]
+docker_container.db: Destroying... [id=6e601f35c83e9bbf8f0919bd60429ae888d1021844926ba45ca41fbad7f79694]
+docker_container.db: Destruction complete after 1s
+docker_image.postgres: Destroying... [id=sha256:398d34d3cc5e29c86077dbf95ad9da223c3a2d0227d12012087da9d468da9d5bpostgres:latest]
+docker_image.postgres: Destruction complete after 0s
+docker_container.example-app: Destruction complete after 1s
+docker_network.shared: Destroying... [id=a9dc58033a14e04880b1bfca9ae50719f5220cf73f7f5cab70e6954eca89d407]
+docker_image.example_app: Destroying... [id=sha256:4d3e1d800c23f3ee61d2fa47561cc8be679ca228f04cdb9c6a5408594d03338dexample_app]
+docker_image.example_app: Destruction complete after 0s
+docker_network.shared: Destruction complete after 3s
+
+Destroy complete! Resources: 5 destroyed.
+ciecia@alpha:~/Desktop/wsb/iac-labs-infra/terraform/zad3$ 

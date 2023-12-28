@@ -15,8 +15,14 @@ resource "docker_image" "nginx" {
   name         = "nginx:latest"
   keep_locally = false
 }
+
+resource "docker_tag" "tag_nginx" {
+  source_image = "nginx:latest"
+  target_image = "nginx1"
+}
+
 resource "docker_container" "nginx" {
-  image = docker_image.nginx.latest
+  image = docker_tag.tag_nginx.target_image
   name  = "tutorial"
   ports {
     internal = 80

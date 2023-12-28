@@ -1,0 +1,43 @@
+ciecia@alpha:~/Desktop/wsb/iac-labs-infra$ cd pulumi/zad2/
+ciecia@alpha:~/Desktop/wsb/iac-labs-infra/pulumi/zad2$ pulumi up
+Please choose a stack, or create a new one: <create a new stack>
+Please enter your desired stack name.
+To create a stack in an organization, use the format <org-name>/<stack-name> (e.g. `acmecorp/dev`): 81488 
+Please enter your desired stack name.
+Created stack '81488'
+Previewing update (81488)
+
+View in Browser (Ctrl+O): https://app.pulumi.com/wrx75752/zad2/81488/previews/2d5f8cd5-f502-4e9f-a335-b0eb467fa4e0
+
+     Type                 Name        Plan     Info
+     pulumi:pulumi:Stack  zad2-81488           Finished installing dependencies
+     Type                         Name                 Plan       
+ +   pulumi:pulumi:Stack          zad2-81488           create     
+ +   ├─ docker:index:RemoteImage  exampleApp           create     
+ +   ├─ docker:index:RemoteImage  postgresRemoteImage  create     
+ +   ├─ docker:index:Network      shared               create     
+ +   ├─ docker:index:Container    db                   create     
+ +   └─ docker:index:Container    example-app          create     
+
+Resources:
+    + 6 to create
+
+Do you want to perform this update? yes
+Updating (81488)
+
+View in Browser (Ctrl+O): https://app.pulumi.com/wrx75752/zad2/81488/updates/1
+
+     Type                         Name                 Status            
+ +   pulumi:pulumi:Stack          zad2-81488           created (1s)      
+ +   ├─ docker:index:RemoteImage  exampleApp           created (1s)      
+ +   ├─ docker:index:RemoteImage  postgresRemoteImage  created (21s)     
+ +   ├─ docker:index:Network      shared               created (2s)      
+ +   ├─ docker:index:Container    example-app          created (1s)      
+ +   └─ docker:index:Container    db                   created (1s)      
+
+Resources:
+    + 6 created
+
+Duration: 26s
+
+ciecia@alpha:~/Desktop/wsb/iac-labs-infra/pulumi/zad2$ 
